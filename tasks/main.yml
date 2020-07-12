@@ -1,0 +1,28 @@
+---
+- name: Disable getty@tty1.service
+  systemd:
+    state: stopped
+    enabled: no
+    name: getty@tty1.service
+    scope: system
+  become: yes
+
+- name: Remove default Users
+  user:
+    name: "{{ item }}"
+    state: absent
+  become: yes
+  with_items:
+    - pi
+    - pirate
+    - jetson
+
+- name: Remove defaut Groups
+  group:
+    name: "{{ item }}"
+    state: absent
+  become: yes
+  with_items:
+    - pi
+    - pirate
+    - jetson
